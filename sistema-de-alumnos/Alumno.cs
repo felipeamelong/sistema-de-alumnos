@@ -6,6 +6,7 @@ public class Alumno
     public int Legajo { get; set; }
     public decimal Nota1 { get; set; }
     public decimal Nota2 { get; set; }
+    
     public Alumno(string nombre, int legajo, decimal nota1, decimal nota2)
     {
         Nombre = nombre;
@@ -13,15 +14,18 @@ public class Alumno
         Nota1 = nota1;
         Nota2 = nota2;
     }
+    
     public decimal Promedio()
     {
         decimal promedio = (Nota1 + Nota2) / 2;
         return promedio;
     }
+    
     public bool EstaAprobado()
     {
         return Promedio() >= 6;
     }
+    
     public void SubirNota()
     {
         Nota1 += 1;
@@ -34,5 +38,10 @@ public class Alumno
         {
             Nota2 = 10;
         }
+    }
+
+    public override string ToString()
+    {
+        return $"{Legajo} - {Nombre} (promedio: {Promedio()})";
     }
 }
