@@ -1,17 +1,11 @@
 namespace sistema_de_alumnos;
 
-public class Alumno
+public class Alumno : Persona
 {
-    public string Nombre { get; set; }
-    public int Legajo { get; private set; }
     public double Nota1 { get; private set; }
     public double Nota2 { get; private set; }
     
-    public Alumno(string nombre, int legajo)
-    {
-        Nombre = nombre;
-        Legajo = legajo;
-    }
+    public Alumno(string nombre, int legajo) : base(nombre, legajo){}
     
     public double Promedio()
     {
