@@ -1,6 +1,7 @@
 ﻿using sistema_de_alumnos;
 
 List<Alumno> listaAlumnos = new List<Alumno>();
+List<Persona> listaPersonas = new List<Persona>();
 bool salir = false;
 
 while (!salir)
@@ -8,11 +9,14 @@ while (!salir)
     Console.WriteLine();
     Console.WriteLine("--- MENÚ DE GESTIÓN DE ALUMNOS ---");
     Console.WriteLine("1. Agregar un alumno");
-    Console.WriteLine("2. Listar todos los alumnos");
-    Console.WriteLine("3. Buscar un alumno por legajo");
-    Console.WriteLine("4. Mostrar el promedio general del curso");
-    Console.WriteLine("5. Mostrar cuántos alumnos están aprobados");
-    Console.WriteLine("6. Salir");
+    Console.WriteLine("2. Agregar un profesor");
+    Console.WriteLine("3. Agregar un preceptor");
+    Console.WriteLine("4. Listar todos los alumnos");
+    Console.WriteLine("5. Buscar un alumno por legajo");
+    Console.WriteLine("6. Mostrar el promedio general del curso");
+    Console.WriteLine("7. Mostrar cuántos alumnos están aprobados");
+    Console.WriteLine("8. Presentar a todas las personas");
+    Console.WriteLine("9. Salir");
     Console.Write("Elija una opción: ");
     int opcion = int.Parse(Console.ReadLine());
     Console.WriteLine();
@@ -21,11 +25,11 @@ while (!salir)
     {
         case 1:
             Console.Write("Ingrese el nombre del alumno: ");
-            string nombre = Console.ReadLine();
+            string nombreAlumno = Console.ReadLine();
             Console.Write("Ingrese el legajo del alumno: ");
             if (int.TryParse(Console.ReadLine(), out int legajo))
             {
-                Alumno nuevoAlumno = new Alumno(nombre, legajo);
+                Alumno nuevoAlumno = new Alumno(nombreAlumno, legajo);
 
                 Console.Write("Ingrese la Nota 1 (0 a 10): ");
                 double.TryParse(Console.ReadLine(), out double nota1);
@@ -37,6 +41,7 @@ while (!salir)
                 if (notasCargadas)
                 {
                     listaAlumnos.Add(nuevoAlumno);
+                    listaPersonas.Add(nuevoAlumno);
                     Console.WriteLine("Alumno cargado correctamente");
                 }
                 else
@@ -51,6 +56,41 @@ while (!salir)
 
             break;
         case 2:
+            Console.Write("Ingrese el nombre del profesor: ");
+            string nombreProfesor = Console.ReadLine();
+            Console.Write("Ingrese el legajo del profesor: ");
+            if (int.TryParse(Console.ReadLine(), out int legajoProfesor))
+            {
+                Console.Write("Ingrese la materia que dicta: ");
+                string materia = Console.ReadLine();
+                
+                Profesor nuevoProfesor = new Profesor(nombreProfesor, legajoProfesor, materia);
+                
+                listaPersonas.Add(nuevoProfesor);
+                Console.WriteLine("Profesor cargado correctamente");
+            }
+            else
+            {
+                Console.WriteLine("Legajo inválido. Debe ser un número entero");
+            }
+            break;
+        case 3:
+            Console.Write("Ingrese el nombre del preceptor: ");
+            string nombrePreceptor = Console.ReadLine();
+            Console.Write("Ingrese el legajo del preceptor: ");
+            if (int.TryParse(Console.ReadLine(), out int legajoPreceptor))
+            {
+                Preceptor nuevoPreceptor = new Preceptor(nombrePreceptor, legajoPreceptor);
+                
+                listaPersonas.Add(nuevoPreceptor);
+                Console.WriteLine("Preceptor cargado correctamente");
+            }
+            else
+            {
+                Console.WriteLine("Legajo inválido. Debe ser un número entero");
+            }
+            break;
+        case 4:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos registrados en el sistema.");
@@ -65,7 +105,7 @@ while (!salir)
             }
 
             break;
-        case 3:
+        case 5:
             Console.Write("Ingrese el legajo del alumno a buscar: ");
             if (int.TryParse(Console.ReadLine(), out int legajoBusqueda))
             {
@@ -95,7 +135,7 @@ while (!salir)
             }
 
             break;
-        case 4:
+        case 6:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos cargados para calcular el promedio general.");
@@ -111,7 +151,7 @@ while (!salir)
                 Console.WriteLine($"Promedio general: {promedioGeneral}");
             }
             break;
-        case 5:
+        case 7:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos cargados en el sistema.");
@@ -129,11 +169,25 @@ while (!salir)
                 Console.WriteLine($"Cantidad de alumnos aprobados: {alumnosAprobados} de {listaAlumnos.Count}");
             }
             break;
-        case 6:
+        case 8:
+            if (listaPersonas.Count == 0)
+            {
+                Console.WriteLine("No hay personas cargadas en el sistema.");
+            }
+            else
+            {
+                Console.WriteLine("--- PRESENTACION DE PERSONAS ---");
+                foreach (Persona persona in listaPersonas)
+                {
+                    persona.Presentarse();
+                }
+            }
+            break;
+        case 9:
             salir = true;
             break;
         default:
-            Console.WriteLine("Opción inválida. Por favor, elija una opción del 1 al 6.");
+            Console.WriteLine("Opción inválida. Por favor, elija una opción del 1 al 9.");
             break;
     }
 }

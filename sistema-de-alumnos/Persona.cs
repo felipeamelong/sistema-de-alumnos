@@ -9,4 +9,9 @@ public class Persona
         Nombre = nombre;
         Legajo = legajo;
     }
+
+    public virtual void Presentarse()
+    {
+        Console.WriteLine($"Hola, soy {Nombre}"); ;
+    }
 }

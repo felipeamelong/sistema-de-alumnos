@@ -50,4 +50,9 @@ public class Alumno : Persona
             return false;
         }
     }
+
+    public override void Presentarse()
+    {
+        Console.WriteLine($"Hola, soy {Nombre}, alumno con legajo {Legajo}");
+    }
 }
