@@ -2,6 +2,8 @@
 
 List<Alumno> listaAlumnos = new List<Alumno>();
 List<Persona> listaPersonas = new List<Persona>();
+List<Materia> listaMaterias = new List<Materia>();
+List<IExportable> listaExportables = new List<IExportable>();
 bool salir = false;
 
 while (!salir)
@@ -11,12 +13,14 @@ while (!salir)
     Console.WriteLine("1. Agregar un alumno");
     Console.WriteLine("2. Agregar un profesor");
     Console.WriteLine("3. Agregar un preceptor");
-    Console.WriteLine("4. Listar todos los alumnos");
-    Console.WriteLine("5. Buscar un alumno por legajo");
-    Console.WriteLine("6. Mostrar el promedio general del curso");
-    Console.WriteLine("7. Mostrar cuántos alumnos están aprobados");
-    Console.WriteLine("8. Presentar a todas las personas");
-    Console.WriteLine("9. Salir");
+    Console.WriteLine("4. Agregar una materia");
+    Console.WriteLine("5. Listar todos los alumnos");
+    Console.WriteLine("6. Buscar un alumno por legajo");
+    Console.WriteLine("7. Mostrar el promedio general del curso");
+    Console.WriteLine("8. Mostrar cuántos alumnos están aprobados");
+    Console.WriteLine("9. Presentar a todas las personas");
+    Console.WriteLine("10. Exportar listado");
+    Console.WriteLine("11. Salir");
     Console.Write("Elija una opción: ");
     int opcion = int.Parse(Console.ReadLine());
     Console.WriteLine();
@@ -42,6 +46,7 @@ while (!salir)
                 {
                     listaAlumnos.Add(nuevoAlumno);
                     listaPersonas.Add(nuevoAlumno);
+                    listaExportables.Add(nuevoAlumno);
                     Console.WriteLine("Alumno cargado correctamente");
                 }
                 else
@@ -67,6 +72,7 @@ while (!salir)
                 Profesor nuevoProfesor = new Profesor(nombreProfesor, legajoProfesor, materia);
                 
                 listaPersonas.Add(nuevoProfesor);
+                listaExportables.Add(nuevoProfesor);
                 Console.WriteLine("Profesor cargado correctamente");
             }
             else
@@ -91,6 +97,25 @@ while (!salir)
             }
             break;
         case 4:
+            Console.Write("Ingrese el nombre de la materia: ");
+            string nombreMateria = Console.ReadLine();
+            Console.Write("Ingrese el codigo del materia: ");
+            string codigoMateria = Console.ReadLine();
+            Console.Write("Ingrese la cantidad de horas de la materia: ");
+            if (int.TryParse(Console.ReadLine(), out int horasMateria))
+            {
+                Materia nuevaMateria = new Materia(nombreMateria, codigoMateria, horasMateria);
+                
+                listaMaterias.Add(nuevaMateria);
+                listaExportables.Add(nuevaMateria);
+                Console.WriteLine("Materia cargada correctamente");
+            }
+            else
+            {
+                Console.WriteLine("Horas inválidas. Debe ser un número entero");
+            }
+            break;
+        case 5:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos registrados en el sistema.");
@@ -105,7 +130,7 @@ while (!salir)
             }
 
             break;
-        case 5:
+        case 6:
             Console.Write("Ingrese el legajo del alumno a buscar: ");
             if (int.TryParse(Console.ReadLine(), out int legajoBusqueda))
             {
@@ -135,7 +160,7 @@ while (!salir)
             }
 
             break;
-        case 6:
+        case 7:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos cargados para calcular el promedio general.");
@@ -151,7 +176,7 @@ while (!salir)
                 Console.WriteLine($"Promedio general: {promedioGeneral}");
             }
             break;
-        case 7:
+        case 8:
             if (listaAlumnos.Count == 0)
             {
                 Console.WriteLine("No hay alumnos cargados en el sistema.");
@@ -169,7 +194,7 @@ while (!salir)
                 Console.WriteLine($"Cantidad de alumnos aprobados: {alumnosAprobados} de {listaAlumnos.Count}");
             }
             break;
-        case 8:
+        case 9:
             if (listaPersonas.Count == 0)
             {
                 Console.WriteLine("No hay personas cargadas en el sistema.");
@@ -183,11 +208,25 @@ while (!salir)
                 }
             }
             break;
-        case 9:
+        case 10:
+            if (listaPersonas.Count == 0 && listaMaterias.Count == 0)
+            {
+                Console.WriteLine("No hay datos cargados en el sistema.");
+            }
+            else
+            {
+                Console.WriteLine("--- EXPORTABLE ---");
+                foreach (IExportable exportable in listaExportables)
+                {
+                    Console.WriteLine(exportable.ExportarLinea());
+                }
+            } 
+            break;
+        case 11:
             salir = true;
             break;
         default:
-            Console.WriteLine("Opción inválida. Por favor, elija una opción del 1 al 9.");
+            Console.WriteLine("Opción inválida. Por favor, elija una opción del 1 al 11.");
             break;
     }
 }

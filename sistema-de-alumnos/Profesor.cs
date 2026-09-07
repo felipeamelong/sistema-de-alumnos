@@ -1,6 +1,6 @@
 namespace sistema_de_alumnos;
 
-public class Profesor : Persona
+public class Profesor : Persona, IExportable
 {
     public string Materia { get; set; }
 
@@ -12,5 +12,10 @@ public class Profesor : Persona
     public override void Presentarse()
     {
         Console.WriteLine($"Hola, soy {Nombre} y dicto {Materia}");
+    }
+
+    public string ExportarLinea()
+    {
+        return $"PROFESOR;{Nombre};{Materia}";
     }
 }

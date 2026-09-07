@@ -1,6 +1,6 @@
 namespace sistema_de_alumnos;
 
-public class Persona
+public class Persona : IExportable
 {
     public string Nombre { get; set; }
     public int Legajo { get; private set; }
@@ -13,5 +13,10 @@ public class Persona
     public virtual void Presentarse()
     {
         Console.WriteLine($"Hola, soy {Nombre}"); ;
+    }
+
+    public string ExportarLinea()
+    {
+        return $"{Nombre};{Legajo}";
     }
 }
